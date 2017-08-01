@@ -13,6 +13,8 @@ public class WorkerResult {
     private BoundParams startParams;
     private BoundParams endParams;
 
+    private boolean whole;
+
     WorkerResult(int workerPosition, long startPosition, long length) {
         this.workerPosition = workerPosition;
         this.sequenceStartPosition = startPosition;
@@ -47,6 +49,15 @@ public class WorkerResult {
         return workerPosition;
     }
 
+    //means that result of worker contains whole checked sequence from start to end
+    public boolean isWhole() {
+        return whole;
+    }
+
+    public void setWhole(boolean whole) {
+        this.whole = whole;
+    }
+
     @Override
     public String toString() {
         return "WorkerResult{" +
@@ -55,6 +66,7 @@ public class WorkerResult {
                 ", sequenceLength=" + sequenceLength +
                 ", startParams=" + startParams +
                 ", endParams=" + endParams +
+                ", whole=" + whole +
                 '}';
     }
 }

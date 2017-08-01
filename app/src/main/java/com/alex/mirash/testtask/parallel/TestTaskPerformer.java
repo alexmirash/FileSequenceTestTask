@@ -36,7 +36,7 @@ public class TestTaskPerformer {
         if (symbolsLeft > BUCKET_SIZE * 0.25) {
             workersCount = count + 1;
         } else {
-            workersCount = count;
+            workersCount = Math.max(1, count);
         }
         log("workersCount = " + workersCount);
         ExecutorService service = Executors.newFixedThreadPool(workersCount);
@@ -56,13 +56,16 @@ public class TestTaskPerformer {
             results[workerResult.getWorkerPosition()] = workerResult;
         }
         log("all tasks completed " + (System.currentTimeMillis() - startTime));
+        service.shutdownNow();
         //analise thread results and find the best one
         long maxStartPosition = -1;
         long maxLength = 0;
+
         for (int i = 0; i < workersCount; i++) {
             WorkerResult currentResult = results[i];
             long currentLength = currentResult.getSequenceLength();
             long currentStartPosition = currentResult.getSequenceStartPosition();
+
             //concat end of current result and start of next
             if (i != workersCount - 1) {
                 BoundParams startParams = currentResult.getEndParams();
@@ -83,7 +86,13 @@ public class TestTaskPerformer {
                 maxStartPosition = currentStartPosition;
             }
         }
-        service.shutdownNow();
+        //TODO possible to make in one loop but need 2 think
+        long currentWholeStartPosition = 0;
+        long currentWholeLength = 0;
+        boolean isWholeStarted = false;
+        for (int i = 0; i < workersCount; i++) {
+
+        }
         return new TaskResult(maxStartPosition, maxLength);
     }
 }

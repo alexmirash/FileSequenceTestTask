@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 import static com.alex.mirash.testtask.tool.LogUtils.log;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String FILE_NAME = "test10xy7";
+    public static final String FILE_NAME = "test_50";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

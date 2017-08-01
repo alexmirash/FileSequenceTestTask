@@ -16,7 +16,6 @@ import static com.alex.mirash.testtask.tool.LogUtils.log;
 
 public class SequenceSearchWorker implements Callable<WorkerResult> {
     private int position;
-    private long sleepTime;
 
     private File file;
     private long startFileScanIndex;
@@ -49,10 +48,15 @@ public class SequenceSearchWorker implements Callable<WorkerResult> {
                 return null;
             }
             char previousChar = (char) character;
+            char currentChar = previousChar;
+
+            boolean isFirstZero = previousChar == '0';
+            boolean isCheckStartBound = true;
+            long boundStartLength = 1;
             //read file symbol by symbol
             while (index < endScanIndex && (character = bufferedReader.read()) != -1) {
                 //run alg here
-                char currentChar = (char) character;
+                currentChar = (char) character;
                 //check condition of sequence end
                 if (previousChar == '0' && currentChar == '0') {
                     long currentLength = index - currentStartIndex;  //length of current sequence
@@ -61,6 +65,10 @@ public class SequenceSearchWorker implements Callable<WorkerResult> {
                         maxStartIndex = currentStartIndex;
                         maxLength = currentLength;
                     }
+                    if (isCheckStartBound) {
+                        isCheckStartBound = false;
+                        boundStartLength = currentLength;
+                    }
                     //start check next sequence from current index
                     currentStartIndex = index;
                 }
@@ -68,16 +76,23 @@ public class SequenceSearchWorker implements Callable<WorkerResult> {
                 //
                 index++;
             }
+            boolean isLastZero = currentChar == '0';
             //check last sequence
             long currentLength = index - currentStartIndex;
             if (currentLength > maxLength) {
                 maxStartIndex = currentStartIndex;
                 maxLength = currentLength;
             }
+            if (isCheckStartBound) {
+                boundStartLength = currentLength;
+            }
             bufferedReader.close();
             result = new WorkerResult(position, maxStartIndex, maxLength);
-            result.setStartParams(new BoundParams(5, true));
-            result.setEndParams(new BoundParams(5, false));
+            if (maxStartIndex == startFileScanIndex && maxLength == endScanIndex - startFileScanIndex) {
+                result.setWhole(true);
+            }
+            result.setStartParams(new BoundParams(boundStartLength, isFirstZero));
+            result.setEndParams(new BoundParams(currentStartIndex, currentLength, isLastZero));
             log("run finished [" + position + "] " + result);
             return result;
         } catch (Exception ignored) {
