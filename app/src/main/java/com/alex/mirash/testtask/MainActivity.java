@@ -14,19 +14,29 @@ import java.util.concurrent.ExecutionException;
 import static com.alex.mirash.testtask.tool.LogUtils.log;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String FILE_NAME = "test_50";
+    public static final String FILE_NAME = "test10xy7";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.button_create_file).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long size = 10000000L;
+                try {
+                    FileUtils.createFile("test10xy7", size);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 performAlgorithm();
             }
         });
-
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

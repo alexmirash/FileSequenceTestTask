@@ -46,4 +46,15 @@ public class WorkerResult {
     public int getWorkerPosition() {
         return workerPosition;
     }
+
+    @Override
+    public String toString() {
+        return "WorkerResult{" +
+                "workerPosition=" + workerPosition +
+                ", sequenceStartPosition=" + sequenceStartPosition +
+                ", sequenceLength=" + sequenceLength +
+                ", startParams=" + startParams +
+                ", endParams=" + endParams +
+                '}';
+    }
 }

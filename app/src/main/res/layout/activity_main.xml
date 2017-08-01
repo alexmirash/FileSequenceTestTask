@@ -9,6 +9,12 @@
     android:padding="16dp"
     tools:context="com.alex.mirash.testtask.MainActivity"
     >
+    <Button
+        android:id="@+id/button_create_file"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="CREATE FILE"
+        />
 
     <Button
         android:id="@+id/button"

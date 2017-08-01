@@ -30,4 +30,13 @@ public class BoundParams {
     public boolean isCheckBorderElement() {
         return isCheckBorderElement;
     }
+
+    @Override
+    public String toString() {
+        return "BoundParams{" +
+                "startIndex=" + startIndex +
+                ", length=" + length +
+                ", isCheckBorderElement=" + isCheckBorderElement +
+                '}';
+    }
 }

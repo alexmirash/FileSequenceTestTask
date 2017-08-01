@@ -21,7 +21,7 @@ import static com.alex.mirash.testtask.tool.LogUtils.log;
  */
 
 public class TestTaskPerformer {
-    private final long BUCKET_SIZE = 10;
+    private static final long BUCKET_SIZE = 1000000;
 
     public TestTaskPerformer() {
     }
